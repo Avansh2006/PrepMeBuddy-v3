@@ -5,7 +5,7 @@ import { ClerkProvider, SignedIn, SignedOut, useUser, RedirectToSignIn } from "@
 
 import Dashboard from "./pages/Dashboard";
 import Challenge from "./pages/Challenge";
-import SolveChallenge from "./pages/CodingPage";
+import CodingPage from "./pages/CodingPage";
 import Leaderboard from "./pages/Leaderboard";
 import Roadmap from "./pages/Roadmap";
 import Login from "./pages/login";
@@ -75,7 +75,7 @@ function App() {
           <Routes>
             <Route path="/" element={<SignedIn><Dashboard /></SignedIn>} />
             <Route path="/challenge" element={<SignedIn><Challenge /></SignedIn>} />
-            <Route path="/challenge/:id" element={<SignedIn><SolveChallenge /></SignedIn>} />
+            <Route path="/challenge/:id" element={<SignedIn><CodingPage /></SignedIn>} />
             <Route path="/leaderboard" element={<SignedIn><Leaderboard /></SignedIn>} />
             <Route path="/roadmap" element={<SignedIn><Roadmap /></SignedIn>} />
             <Route path="/dsa" element={<SignedIn>< DSAPlayground /></SignedIn>} />

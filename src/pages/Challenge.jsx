@@ -51,7 +51,7 @@ export default function ChallengesPage() {
 
   const handleSolveChallenge = (challengeId) => {
     if (challengeId) {
-      window.location.href = `/dsa?questionId=${challengeId}`;
+      window.location.href = `/challenge/${challengeId}`;
     } else {
       alert("No specific question available for this challenge.");
     }
