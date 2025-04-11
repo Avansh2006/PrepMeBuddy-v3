@@ -5,11 +5,11 @@ import { ClerkProvider, SignedIn, SignedOut, useUser, RedirectToSignIn } from "@
 
 import Dashboard from "./pages/Dashboard";
 import Challenge from "./pages/Challenge";
-import SolveChallenge from "./pages/Codingpage";
+// import SolveChallenge from "./pages/Codingpage";
 import Leaderboard from "./pages/Leaderboard";
 import Roadmap from "./pages/Roadmap";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import Login from "./pages/login";
+import Signup from "./pages/signup";
 import AdminPanel from "./pages/AdminPanel";
 import Profile from "./pages/profile";
 import Logout from "./pages/logout";

@@ -115,19 +115,19 @@ export default function ProfilePage() {
   if (!user) return <div>Please log in to view your profile.</div>;
 
   const inputClass =
-    "w-full p-2 border rounded-md bg-white dark:bg-gray-700 dark:text-white";
+    "w-full p-2 border rounded-md bg-gray-700 text-white border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500";
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-6 bg-gray-100 dark:bg-gray-800 rounded-xl shadow-lg text-black dark:text-white">
+    <div className="max-w-4xl mx-auto mt-10 p-6 bg-gray-900 text-white rounded-xl shadow-lg">
       <Toaster position="top-center" reverseOrder={false} />
-      <h2 className="text-3xl font-semibold text-center mb-6">Profile Page</h2>
+      <h2 className="text-3xl font-semibold text-center mb-6 text-teal-400">Profile Page</h2>
 
       <div className="flex flex-col md:flex-row gap-6">
         <div className="flex flex-col items-center md:w-1/3">
           <img
             src={formData.img || "https://via.placeholder.com/150"}
             alt="Profile"
-            className="w-48 h-48 rounded-full object-cover border"
+            className="w-48 h-48 rounded-full object-cover border border-gray-600"
           />
           {isEditing && (
             <input
@@ -169,9 +169,9 @@ export default function ProfilePage() {
               <p><strong>Gender:</strong> {userData?.gender || "N/A"}</p>
               <p><strong>Address:</strong> {userData?.address || "N/A"}</p>
               <p className="col-span-2"><strong>Bio:</strong> {userData?.bio || "N/A"}</p>
-              <p><strong>Instagram:</strong> <a href={userData?.insta} className="text-blue-500 underline">{userData?.insta}</a></p>
-              <p><strong>Twitter:</strong> <a href={userData?.twitter} className="text-blue-500 underline">{userData?.twitter}</a></p>
-              <p><strong>LinkedIn:</strong> <a href={userData?.linkdin} className="text-blue-500 underline">{userData?.linkdin}</a></p>
+              <p><strong>Instagram:</strong> <a href={userData?.insta} className="text-teal-400 underline">{userData?.insta}</a></p>
+              <p><strong>Twitter:</strong> <a href={userData?.twitter} className="text-teal-400 underline">{userData?.twitter}</a></p>
+              <p><strong>LinkedIn:</strong> <a href={userData?.linkdin} className="text-teal-400 underline">{userData?.linkdin}</a></p>
             </>
           )}
         </div>
@@ -179,17 +179,17 @@ export default function ProfilePage() {
 
       {/* Points Section */}
       <div className="mt-6 text-center">
-        <h3 className="text-xl font-semibold">🏆 Points</h3>
+        <h3 className="text-xl font-semibold text-teal-400">🏆 Points</h3>
         <p className="text-lg">{points} Points</p>
       </div>
 
       {/* Solved Questions Section */}
       <div className="mt-6 text-center">
-        <h3 className="text-xl font-semibold">✅ Solved Questions</h3>
+        <h3 className="text-xl font-semibold text-teal-400">✅ Solved Questions</h3>
         {solvedQuestions.length > 0 ? (
-          <ul className="list-disc list-inside">
+          <ul className="list-disc list-inside text-gray-300">
             {solvedQuestions.map((id) => (
-              <li key={id} className="text-gray-700">{id}</li>
+              <li key={id}>{id}</li>
             ))}
           </ul>
         ) : (
@@ -201,19 +201,19 @@ export default function ProfilePage() {
         {isEditing ? (
           <button
             onClick={handleSave}
-            className="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+            className="px-5 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition"
           >
             Save Profile
           </button>
         ) : (
           <button
             onClick={() => setIsEditing(true)}
-            className="px-5 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition"
+            className="px-5 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-500 transition"
           >
             Edit Profile
           </button>
         )}
       </div>
-    </div>
-  );
+    </div>
+  );
 }

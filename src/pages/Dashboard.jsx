@@ -3,7 +3,7 @@ import { useUser } from "@clerk/clerk-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import { db } from "@/firebase"; // Assuming firebase is set up
 
 // Simulated user data
@@ -23,13 +23,25 @@ const roadmapSteps = [
   { title: "Mock Interviews", week: 4, completed: false },
 ];
 
+const theme = {
+  backgroundGradient: "bg-gray-900",
+  cardBackground: "bg-gray-800",
+  textColor: "text-white",
+  accentColor: "text-teal-400",
+  buttonPrimary: "bg-blue-600 hover:bg-blue-700",
+  buttonSecondary: "bg-gray-600 hover:bg-gray-500",
+  progressBarBackground: "bg-gray-600",
+  progressBarFill: "bg-teal-500",
+};
+
 export default function Dashboard() {
   const { user } = useUser();
   const [stats, setStats] = useState(initialStats);
   const [resumeName, setResumeName] = useState("");
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [showRoadmap, setShowRoadmap] = useState(false);
-  const [leaderboard, setLeaderboard] = useState([]); // Add state for leaderboard
+  const [leaderboard, setLeaderboard] = useState([]);
+  const [realTimePoints, setRealTimePoints] = useState(0); // State for real-time points
 
   useEffect(() => {
     const fetchLeaderboard = async () => {
@@ -55,6 +67,24 @@ export default function Dashboard() {
       localStorage.setItem("lastVisit", today);
     }
   }, []);
+
+  // Fetch real-time points from the database
+  useEffect(() => {
+    if (user?.id) {
+      const unsubscribe = onSnapshot(
+        collection(db, "users"),
+        (snapshot) => {
+          const currentUser = snapshot.docs
+            .map((doc) => ({ id: doc.id, ...doc.data() }))
+            .find((u) => u.id === user.id);
+          if (currentUser) {
+            setRealTimePoints(currentUser.points || 0);
+          }
+        }
+      );
+      return () => unsubscribe(); // Cleanup listener on unmount
+    }
+  }, [user]);
 
   // Handle resume upload
   const handleResumeUpload = (e) => {
@@ -84,7 +114,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-zinc-950 to-zinc-900 text-white p-6 space-y-10">
+    <div className={`min-h-screen ${theme.backgroundGradient} ${theme.textColor} p-6 space-y-10`}>
       {/* Header */}
       <motion.h1
         initial={{ opacity: 0 }}
@@ -92,33 +122,27 @@ export default function Dashboard() {
         transition={{ duration: 0.5 }}
         className="text-4xl font-bold"
       >
-        Welcome back, {user?.firstName || "Techie"} 👋
+        Welcome back, <span className="text-cyan-400">{user?.firstName || "Techie"}</span> 👋
       </motion.h1>
 
-      {/* Stats Grid */}
+      {/* Real-Time Points */}
       <motion.div
         variants={cardVariants}
         initial="hidden"
         animate="visible"
-        className="grid grid-cols-2 md:grid-cols-4 gap-4"
+        className="grid grid-cols-1 md:grid-cols-2 gap-4"
       >
-        <Card className="bg-zinc-800">
+        <Card className={theme.cardBackground}>
           <CardContent className="p-6">
-            <h2 className="text-lg font-semibold">🔥 Daily Streak</h2>
-            <p className="text-4xl mt-2">{stats.streak} days</p>
-          </CardContent>
-        </Card>
-        <Card className="bg-zinc-800">
-          <CardContent className="p-6">
-            <h2 className="text-lg font-semibold">⚡ Points</h2>
-            <p className="text-4xl mt-2">{stats.xp}</p>
+            <h2 className="text-lg font-semibold">🌟 Points</h2>
+            <p className="text-4xl mt-2">{realTimePoints}</p>
           </CardContent>
         </Card>
       </motion.div>
 
       {/* Coding Challenge */}
       <motion.div variants={cardVariants} initial="hidden" animate="visible">
-        <Card className="bg-zinc-800">
+        <Card className={theme.cardBackground}>
           <CardContent className="p-6">
             <h2 className="text-lg font-semibold mb-2">
               Today's Challenge: Two Sum
@@ -130,13 +154,10 @@ export default function Dashboard() {
             <div className="flex gap-4">
               <Button
                 onClick={() => (window.location.href = "/challenge")}
-                className="bg-purple-600 hover:bg-purple-700"
+                className={theme.buttonPrimary}
               >
                 Solve Now
               </Button>
-              <p className="text-sm">
-                Progress: {stats.challengesCompleted}/{stats.totalChallenges}
-              </p>
             </div>
           </CardContent>
         </Card>
@@ -144,7 +165,7 @@ export default function Dashboard() {
 
       {/* Resume Upload */}
       <motion.div variants={cardVariants} initial="hidden" animate="visible">
-        <Card className="bg-zinc-800">
+        <Card className={theme.cardBackground}>
           <CardContent className="p-6">
             <h2 className="text-lg font-semibold mb-2">Upload Resume</h2>
             <input
@@ -162,13 +183,13 @@ export default function Dashboard() {
 
       {/* Leaderboard */}
       <motion.div variants={cardVariants} initial="hidden" animate="visible">
-        <Card className="bg-zinc-800">
+        <Card className={theme.cardBackground}>
           <CardContent className="p-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold">🏆 Leaderboard</h2>
               <Button
                 onClick={() => setShowLeaderboard(!showLeaderboard)}
-                className="bg-gray-700 hover:bg-gray-600"
+                className={theme.buttonSecondary}
               >
                 {showLeaderboard ? "Hide" : "Show"}
               </Button>
@@ -189,13 +210,13 @@ export default function Dashboard() {
 
       {/* Roadmap */}
       <motion.div variants={cardVariants} initial="hidden" animate="visible">
-        <Card className="bg-zinc-800">
+        <Card className={theme.cardBackground}>
           <CardContent className="p-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold">📈 Prep Roadmap</h2>
               <Button
                 onClick={() => (window.location.href = "/roadmap")}
-                className="bg-gray-700 hover:bg-gray-600"
+                className={theme.buttonSecondary}
               >
                 Show
               </Button>
@@ -206,16 +227,16 @@ export default function Dashboard() {
                   {roadmapSteps.map((step) => (
                     <li
                       key={step.week}
-                      className={step.completed ? "text-teal-400" : ""}
+                      className={step.completed ? theme.accentColor : ""}
                     >
                       {step.title} (Week {step.week})
                       {step.completed && " ✅"}
                     </li>
                   ))}
                 </ol>
-                <div className="w-full bg-gray-600 rounded-full h-2.5 mt-4">
+                <div className={`w-full ${theme.progressBarBackground} rounded-full h-2.5 mt-4`}>
                   <div
-                    className="bg-teal-500 h-2.5 rounded-full"
+                    className={`${theme.progressBarFill} h-2.5 rounded-full`}
                     style={{ width: `${stats.roadmapProgress}%` }}
                   ></div>
                 </div>
@@ -224,6 +245,6 @@ export default function Dashboard() {
           </CardContent>
         </Card>
       </motion.div>
-    </div>
-  );
+    </div>
+  );
 }

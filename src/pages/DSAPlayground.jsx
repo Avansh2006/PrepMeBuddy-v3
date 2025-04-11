@@ -2,6 +2,15 @@ import React, { useState, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import { FaClock } from "react-icons/fa"; // Import clock icon
 
+const theme = {
+  backgroundColor: "bg-gray-900",
+  secondaryBackgroundColor: "bg-gray-800",
+  primaryTextColor: "text-white",
+  accentColor: "text-teal-400",
+  buttonPrimary: "bg-teal-600 hover:bg-teal-700",
+  buttonSecondary: "bg-gray-600 hover:bg-gray-500",
+};
+
 const DSAPlayground = () => {
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
@@ -202,105 +211,44 @@ const DSAPlayground = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        padding: "20px",
-        fontFamily: "'Roboto', sans-serif",
-        backgroundColor: "#1e1e2f",
-        color: "#ffffff",
-        minHeight: "100vh",
-      }}
-    >
+    <div className={`min-h-screen ${theme.backgroundColor} ${theme.primaryTextColor} p-6`}>
       {/* Header */}
-      <header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "20px",
-        }}
-      >
-        <h1 style={{ fontSize: "24px", fontWeight: "bold", color: "#00d4ff" }}>
-          DSA Playground
-        </h1>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "10px",
-            backgroundColor: "#2a2a3b",
-            padding: "10px 15px",
-            borderRadius: "8px",
-          }}
-        >
-          <FaClock size={20} color="#00d4ff" />
+      <header className="flex justify-between items-center mb-6">
+        <h1 className={`text-2xl font-bold ${theme.accentColor}`}>DSA Playground</h1>
+        <div className={`flex items-center gap-4 ${theme.secondaryBackgroundColor} p-3 rounded-lg`}>
+          <FaClock size={20} className={theme.accentColor} />
           {isTimerRunning && (
-            <p style={{ margin: 0, fontSize: "16px", fontWeight: "bold" }}>
-              {formatTime(timer)}
-            </p>
+            <p className="text-lg font-semibold">{formatTime(timer)}</p>
           )}
         </div>
       </header>
 
       {/* Question Section */}
-      <section
-        style={{
-          marginBottom: "20px",
-          padding: "15px",
-          backgroundColor: "#2a2a3b",
-          borderRadius: "8px",
-        }}
-      >
-        <h2 style={{ fontSize: "20px", marginBottom: "10px" }}>Question</h2>
-        <p style={{ whiteSpace: "pre-wrap", lineHeight: "1.6" }}>{question}</p>
+      <section className={`mb-6 p-4 rounded-lg ${theme.secondaryBackgroundColor}`}>
+        <h2 className="text-xl font-semibold mb-2">Question</h2>
+        <p className="whitespace-pre-wrap leading-relaxed">{question}</p>
       </section>
 
       {/* Test Cases Section */}
-      <section
-        style={{
-          marginBottom: "20px",
-          padding: "15px",
-          backgroundColor: "#2a2a3b",
-          borderRadius: "8px",
-        }}
-      >
-        <h2 style={{ fontSize: "20px", marginBottom: "10px" }}>Test Cases</h2>
-        <ul style={{ paddingLeft: "20px" }}>
+      <section className={`mb-6 p-4 rounded-lg ${theme.secondaryBackgroundColor}`}>
+        <h2 className="text-xl font-semibold mb-2">Test Cases</h2>
+        <ul className="list-disc pl-5">
           {testCases.map((testCase, index) => (
-            <li key={index} style={{ marginBottom: "5px" }}>
-              {testCase}
-            </li>
+            <li key={index} className="mb-1">{testCase}</li>
           ))}
         </ul>
       </section>
 
       {/* Language Selector */}
-      <div
-        style={{
-          marginBottom: "20px",
-          display: "flex",
-          alignItems: "center",
-          gap: "10px",
-        }}
-      >
-        <label
-          htmlFor="language-select"
-          style={{ fontSize: "16px", fontWeight: "bold" }}
-        >
+      <div className="mb-6 flex items-center gap-4">
+        <label htmlFor="language-select" className="text-lg font-semibold">
           Select Language:
         </label>
         <select
           id="language-select"
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
-          style={{
-            padding: "10px",
-            fontSize: "16px",
-            backgroundColor: "#2a2a3b",
-            color: "#ffffff",
-            border: "1px solid #00d4ff",
-            borderRadius: "8px",
-          }}
+          className={`p-2 rounded-md ${theme.secondaryBackgroundColor} ${theme.primaryTextColor} border border-teal-500`}
         >
           <option value="javascript">JavaScript</option>
           <option value="cpp">C++</option>
@@ -310,112 +258,63 @@ const DSAPlayground = () => {
       </div>
 
       {/* Code Editor */}
-      <Editor
-        height="400px"
-        language={language}
-        defaultValue={
-          language === "javascript"
-            ? "// Write your JavaScript code here..."
-            : language === "cpp"
-            ? "// Write your C++ code here..."
-            : language === "java"
-            ? "// Write your Java code here..."
-            : language === "python"
-            ? "# Write your Python code here..."
-            : ""
-        }
-        value={code}
-        onChange={(value) => setCode(value || "")}
-        theme="vs-dark"
-        options={{
-          fontSize: 14,
-          minimap: { enabled: false },
-        }}
-      />
+      <div className={`mb-6 p-4 rounded-lg ${theme.secondaryBackgroundColor}`}>
+        <Editor
+          height="400px"
+          language={language}
+          defaultValue={
+            language === "javascript"
+              ? "// Write your JavaScript code here..."
+              : language === "cpp"
+              ? "// Write your C++ code here..."
+              : language === "java"
+              ? "// Write your Java code here..."
+              : language === "python"
+              ? "# Write your Python code here..."
+              : ""
+          }
+          value={code}
+          onChange={(value) => setCode(value || "")}
+          theme="vs-dark"
+          options={{
+            fontSize: 14,
+            minimap: { enabled: false },
+          }}
+        />
+      </div>
 
       {/* Buttons */}
-      <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}>
+      <div className="flex gap-4">
         <button
           onClick={runCode}
-          style={{
-            padding: "10px 20px",
-            fontSize: "16px",
-            fontWeight: "bold",
-            backgroundColor: "#00d4ff",
-            color: "#1e1e2f",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-          }}
+          className={`px-4 py-2 rounded-md font-semibold ${theme.buttonPrimary}`}
         >
           Run Code
         </button>
         <button
           onClick={() => handleTimerSelection(5)}
-          style={{
-            padding: "10px 20px",
-            fontSize: "16px",
-            fontWeight: "bold",
-            backgroundColor: "#2a2a3b",
-            color: "#ffffff",
-            border: "1px solid #00d4ff",
-            borderRadius: "8px",
-            cursor: "pointer",
-          }}
+          className={`px-4 py-2 rounded-md font-semibold ${theme.buttonSecondary}`}
         >
           5 Min Timer
         </button>
         <button
           onClick={() => handleTimerSelection(10)}
-          style={{
-            padding: "10px 20px",
-            fontSize: "16px",
-            fontWeight: "bold",
-            backgroundColor: "#2a2a3b",
-            color: "#ffffff",
-            border: "1px solid #00d4ff",
-            borderRadius: "8px",
-            cursor: "pointer",
-          }}
+          className={`px-4 py-2 rounded-md font-semibold ${theme.buttonSecondary}`}
         >
           10 Min Timer
         </button>
         <button
           onClick={() => handleTimerSelection(15)}
-          style={{
-            padding: "10px 20px",
-            fontSize: "16px",
-            fontWeight: "bold",
-            backgroundColor: "#2a2a3b",
-            color: "#ffffff",
-            border: "1px solid #00d4ff",
-            borderRadius: "8px",
-            cursor: "pointer",
-          }}
+          className={`px-4 py-2 rounded-md font-semibold ${theme.buttonSecondary}`}
         >
           15 Min Timer
         </button>
       </div>
 
       {/* Feedback Section */}
-      <section
-        style={{
-          marginTop: "20px",
-          padding: "15px",
-          backgroundColor: "#2a2a3b",
-          borderRadius: "8px",
-        }}
-      >
-        <h2 style={{ fontSize: "20px", marginBottom: "10px" }}>Feedback</h2>
-        <pre
-          style={{
-            whiteSpace: "pre-wrap",
-            lineHeight: "1.6",
-            fontSize: "14px",
-            color: "#ffffff",
-          }}
-          dangerouslySetInnerHTML={{ __html: feedback }}
-        ></pre>
+      <section className={`mt-6 p-4 rounded-lg ${theme.secondaryBackgroundColor}`}>
+        <h2 className="text-xl font-semibold mb-2">Feedback</h2>
+        <pre className="whitespace-pre-wrap leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: feedback }}></pre>
       </section>
     </div>
   );

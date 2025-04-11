@@ -32,7 +32,7 @@ const ChatBot = () => {
                     body: JSON.stringify({
                         contents: [{
                             parts: [{
-                                text: `Act as an experienced HR recruiter. You are Samantha, from Blue Bricks. You are talking to a candidate applying for a SWE position in the company for entry level jobs so do not expect any high level of knowledge from them. Your task is to:
+                                text: `Act as an experienced HR recruiter. You are Samantha, fromPrepMeBuddy. You are talking to a candidate applying for a SWE position in the company for entry level jobs so do not expect any high level of knowledge from them. Your task is to:
                                   1. Ask relevant questions to assess candidates for software engineering positions.
                                   2. Shortlist anyone who is even remotely qualified.
                                   3. Maintain a professional and friendly tone.
@@ -193,21 +193,39 @@ const ChatBot = () => {
             {/* Chat Modal */}
             <div className={` w-full h-full rounded-t-xl flex flex-col justify-between shadow-xl`}>
                 {/* Header */}
-                <div className="bg-purple-600 text-white px-4 py-3 rounded-t-xl flex justify-between items-center">
-                    <h3 className="font-medium text-lg">Chat with Samantha (HR)</h3>
-                 {isShortlisted && <Link to='/offer-letter' className='border rounded-md bg-green-800 p-2' >Offer Letter</Link>}
+                <div className="bg-gradient-to-br from-purple-600 to-indigo-600 text-white px-4 py-3 rounded-t-xl flex justify-between items-center shadow-lg">
+                    <h3 className="font-semibold text-xl">Chat with Samantha (HR)</h3>
+                    {isShortlisted && (
+                        <Link
+                            to="/offer-letter"
+                            className="border rounded-md bg-green-500 text-white px-4 py-2 hover:bg-green-600 transition"
+                        >
+                            Offer Letter
+                        </Link>
+                    )}
                 </div>
 
                 {/* Chat content */}
-                <div className="p-4 h-[75vh]  overflow-auto bg-gray-50">
+                <div className="p-4 h-[75vh] overflow-auto bg-gray-100 rounded-b-xl shadow-inner">
                     {messages.map((msg, index) => (
-                        <div key={index} className="mb-4">
-                            <div className="text-blue-600 font-semibold">You:</div>
-                            <div className="bg-gray-200 p-2 flex items-center gap-4 rounded-lg text-gray-800"><img src="https://randomuser.me/api/portraits/men/44.jpg" alt="img" className="h-8 w-8 rounded-full" />{msg.user}</div>
+                        <div key={index} className="mb-6">
+                            <div className="text-blue-600 font-semibold mb-1">You:</div>
+                            <div className="bg-gray-200 p-3 flex items-center gap-4 rounded-lg shadow-sm text-gray-800">
+                                <img
+                                    src="https://randomuser.me/api/portraits/men/44.jpg"
+                                    alt="img"
+                                    className="h-10 w-10 rounded-full"
+                                />
+                                {msg.user}
+                            </div>
 
-                            <div className="text-purple-600 font-semibold mt-2">Samantha:</div>
-                            <div className="bg-purple-200 border border-purple-500 p-3 rounded-lg shadow-md flex gap-4 items-center font-bold text-gray-800">
-                                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="avatar" className="h-8 w-8 rounded-full" />
+                            <div className="text-purple-700 font-semibold mt-4 mb-1">Samantha:</div>
+                            <div className="bg-purple-100 border border-purple-400 p-3 rounded-lg shadow-md flex gap-4 items-center font-medium text-gray-900">
+                                <img
+                                    src="https://randomuser.me/api/portraits/women/44.jpg"
+                                    alt="avatar"
+                                    className="h-10 w-10 rounded-full"
+                                />
                                 {msg.bot}
                             </div>
                         </div>
@@ -215,13 +233,13 @@ const ChatBot = () => {
                 </div>
 
                 {/* Input area */}
-                <div className="p-4 bg-white border-t border-gray-200">
-                    <div className="flex items-center gap-2">
+                <div className="p-4 bg-white border-t border-gray-300 rounded-b-xl shadow-lg">
+                    <div className="flex items-center gap-3">
                         <textarea
                             value={question}
                             onChange={(e) => setQuestion(e.target.value)}
                             placeholder="Type your response..."
-                            className="flex-1 border text-black border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-purple-300 focus:border-purple-500 resize-none"
+                            className="flex-1 border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-purple-400 focus:border-purple-500 resize-none text-gray-800 shadow-sm"
                             rows={2}
                             onKeyDown={(e) => {
                                 if (e.key === "Enter" && !e.shiftKey) {
@@ -230,12 +248,22 @@ const ChatBot = () => {
                                 }
                             }}
                         ></textarea>
-                        <button onClick={() => fetchChatbotResponse(question)} disabled={isLoading} className="bg-purple-600 text-white p-3 rounded-lg hover:bg-purple-700 disabled:bg-purple-400 transition-colors">
-                            {isLoading ? <div className="h-5 w-5 border-t-2 border-r-2 border-white rounded-full animate-spin"></div> : <FaPaperPlane />}
+                        <button
+                            onClick={() => fetchChatbotResponse(question)}
+                            disabled={isLoading}
+                            className="bg-purple-600 text-white p-3 rounded-lg hover:bg-purple-700 disabled:bg-purple-400 transition-all shadow-md"
+                        >
+                            {isLoading ? (
+                                <div className="h-5 w-5 border-t-2 border-r-2 border-white rounded-full animate-spin"></div>
+                            ) : (
+                                <FaPaperPlane />
+                            )}
                         </button>
-                        <button 
-                            onClick={startListening} 
-                            className={`p-3 rounded-lg transition-colors ${isListening ? "bg-red-500" : "bg-blue-600 hover:bg-blue-700"} text-white`}
+                        <button
+                            onClick={startListening}
+                            className={`p-3 rounded-lg transition-all shadow-md ${
+                                isListening ? "bg-red-500" : "bg-blue-600 hover:bg-blue-700"
+                            } text-white`}
                         >
                             <FaMicrophone />
                         </button>

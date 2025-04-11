@@ -107,10 +107,10 @@ const Chatbot = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center p-6 text-white">
-      <div className="bg-gray-800 p-8 rounded-xl shadow-xl max-w-lg w-full space-y-6">
+      <div className="bg-gray-800 p-8 rounded-xl shadow-lg max-w-lg w-full space-y-6">
         {/* Header */}
         <div className="text-center">
-          <h1 className="text-2xl font-semibold text-white mb-2">
+          <h1 className="text-2xl font-semibold text-teal-400 mb-2">
             🚀 AI-Powered Roadmap Generator
           </h1>
           <p className="text-sm text-gray-300">
@@ -125,7 +125,7 @@ const Chatbot = () => {
             placeholder="Your goal (e.g., Full Stack Developer)"
             value={userGoal}
             onChange={(e) => setUserGoal(e.target.value)}
-            className="w-full p-3 rounded-md bg-white text-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            className="w-full p-3 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all"
             disabled={loading}
           />
 
@@ -135,14 +135,14 @@ const Chatbot = () => {
             value={timeAvailable}
             onChange={(e) => setTimeAvailable(e.target.value)}
             min="1"
-            className="w-full p-3 rounded-md bg-white text-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            className="w-full p-3 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all"
             disabled={loading}
           />
 
           <select
             value={skillLevel}
             onChange={(e) => setSkillLevel(e.target.value)}
-            className="w-full p-3 rounded-md bg-white text-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            className="w-full p-3 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all"
             disabled={loading}
           >
             <option value="beginner">Beginner</option>
@@ -151,14 +151,14 @@ const Chatbot = () => {
           </select>
 
           <div className="flex items-center gap-3">
-            <label className="text-sm text-gray-200">
+            <label className="text-sm text-gray-300">
               New to this field?
             </label>
             <input
               type="checkbox"
               checked={isBeginner}
               onChange={() => setIsBeginner(!isBeginner)}
-              className="w-5 h-5 text-blue-600 border-gray-600 rounded"
+              className="w-5 h-5 text-teal-500 border-gray-600 rounded"
               disabled={loading}
             />
           </div>
@@ -166,10 +166,10 @@ const Chatbot = () => {
           <div className="flex gap-4">
             <button
               onClick={getRoadmap}
-              className={`w-full bg-blue-600 text-white py-3 rounded-md font-medium ${
+              className={`w-full bg-teal-600 text-white py-3 rounded-md font-medium ${
                 loading
                   ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-blue-700"
+                  : "hover:bg-teal-700"
               } transition-all`}
               disabled={loading}
             >
@@ -177,7 +177,7 @@ const Chatbot = () => {
             </button>
             <button
               onClick={resetForm}
-              className="w-full bg-gray-600 text-white py-3 rounded-md font-medium hover:bg-gray-700 transition-all"
+              className="w-full bg-gray-600 text-white py-3 rounded-md font-medium hover:bg-gray-500 transition-all"
             >
               Reset
             </button>
@@ -193,12 +193,12 @@ const Chatbot = () => {
         {response && (
           <div className="mt-6 bg-gray-700 rounded-md shadow-md p-5 space-y-4">
             <div className="flex justify-between items-center">
-              <span className="text-blue-400 font-bold text-sm uppercase">
+              <span className="text-teal-400 font-bold text-sm uppercase">
                 🎯 Personalized Roadmap
               </span>
               <button
                 onClick={copyToClipboard}
-                className="text-gray-300 hover:text-blue-400 text-sm transition-colors"
+                className="text-gray-300 hover:text-teal-400 text-sm transition-colors"
               >
                 📋 Copy
               </button>
@@ -225,7 +225,7 @@ const Chatbot = () => {
                 </p>
                 <button
                   onClick={() => setResponse(item.roadmap)}
-                  className="mt-2 text-blue-400 hover:underline"
+                  className="mt-2 text-teal-400 hover:underline"
                 >
                   View Again
                 </button>

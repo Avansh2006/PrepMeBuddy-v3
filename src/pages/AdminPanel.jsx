@@ -132,10 +132,10 @@ export default function AdminPanel() {
   );
 
   return (
-    <div className="p-6 max-w-4xl mx-auto space-y-6">
-      <Card>
+    <div className="p-6 max-w-4xl mx-auto space-y-6 bg-gray-900 text-white">
+      <Card className="bg-gray-800 shadow-lg">
         <CardHeader>
-          <CardTitle>{editId ? "Edit Challenge" : "Add New Challenge"}</CardTitle>
+          <CardTitle className="text-teal-400">{editId ? "Edit Challenge" : "Add New Challenge"}</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -143,33 +143,41 @@ export default function AdminPanel() {
               placeholder="Title *"
               value={form.title}
               onChange={(e) => setForm({ ...form, title: e.target.value })}
+              className="bg-gray-700 text-white border-gray-600 focus:ring-teal-500"
             />
             <Input
               placeholder="Category *"
               value={form.category}
               onChange={(e) => setForm({ ...form, category: e.target.value })}
+              className="bg-gray-700 text-white border-gray-600 focus:ring-teal-500"
             />
             <Input
               placeholder="Description *"
               value={form.description}
               onChange={(e) => setForm({ ...form, description: e.target.value })}
+              className="bg-gray-700 text-white border-gray-600 focus:ring-teal-500"
             />
             <Input
               placeholder="Tags (comma-separated)"
               value={form.tags}
               onChange={(e) => setForm({ ...form, tags: e.target.value })}
+              className="bg-gray-700 text-white border-gray-600 focus:ring-teal-500"
             />
             <Input
               placeholder="Hint"
               value={form.hint}
               onChange={(e) => setForm({ ...form, hint: e.target.value })}
+              className="bg-gray-700 text-white border-gray-600 focus:ring-teal-500"
             />
             <Input
               placeholder="LeetCode URL"
               value={form.leetCodeUrl}
               onChange={(e) => setForm({ ...form, leetCodeUrl: e.target.value })}
+              className="bg-gray-700 text-white border-gray-600 focus:ring-teal-500"
             />
-            <Button type="submit">{editId ? "Update" : "Add"}</Button>
+            <Button type="submit" className="bg-teal-600 hover:bg-teal-700 text-white">
+              {editId ? "Update" : "Add"}
+            </Button>
           </form>
         </CardContent>
       </Card>
@@ -178,14 +186,20 @@ export default function AdminPanel() {
         placeholder="Search Challenges"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="w-full mt-4"
+        className="w-full mt-4 bg-gray-800 text-white border-gray-600 focus:ring-teal-500"
       />
 
       <Tabs defaultValue="all" onValueChange={setCategoryFilter}>
-        <TabsList>
-          <TabsTrigger value="all">All</TabsTrigger>
+        <TabsList className="bg-gray-800">
+          <TabsTrigger value="all" className="text-gray-300 hover:text-teal-400">
+            All
+          </TabsTrigger>
           {[...new Set(challenges.map((c) => c.category))].map((cat) => (
-            <TabsTrigger key={cat} value={cat}>
+            <TabsTrigger
+              key={cat}
+              value={cat}
+              className="text-gray-300 hover:text-teal-400"
+            >
               {cat}
             </TabsTrigger>
           ))}
@@ -200,33 +214,36 @@ export default function AdminPanel() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Card className="bg-gray-100">
+            <Card className="bg-gray-800 shadow-md">
               <CardContent className="flex justify-between items-center p-4">
                 <div>
-                  <h4 className="text-lg font-bold">{challenge.title}</h4>
-                  <p className="text-sm text-gray-500">{challenge.category}</p>
-                  <p>{challenge.description}</p>
+                  <h4 className="text-lg font-bold text-teal-400">{challenge.title}</h4>
+                  <p className="text-sm text-gray-400">{challenge.category}</p>
+                  <p className="text-gray-300">{challenge.description}</p>
                   {challenge.tags && (
-                    <p className="text-xs text-gray-700 mt-1">
+                    <p className="text-xs text-gray-500 mt-1">
                       Tags: {challenge.tags}
                     </p>
                   )}
                   {challenge.hint && (
-                    <p className="text-xs text-blue-600 mt-1">
+                    <p className="text-xs text-blue-400 mt-1">
                       Hint: {challenge.hint}
                     </p>
                   )}
                   {challenge.leetCodeUrl && (
-                    <p className="text-xs text-blue-600 mt-1">
+                    <p className="text-xs text-blue-400 mt-1">
                       LeetCode: <a href={challenge.leetCodeUrl} target="_blank" rel="noopener noreferrer">{challenge.leetCodeUrl}</a>
                     </p>
                   )}
                 </div>
                 <div className="flex gap-2">
-                  <Button onClick={() => handleEdit(challenge)}>Edit</Button>
+                  <Button onClick={() => handleEdit(challenge)} className="bg-blue-600 hover:bg-blue-700 text-white">
+                    Edit
+                  </Button>
                   <Button
                     variant="destructive"
                     onClick={() => handleDelete(challenge.id)}
+                    className="bg-red-600 hover:bg-red-700 text-white"
                   >
                     Delete
                   </Button>
@@ -241,7 +258,8 @@ export default function AdminPanel() {
         totalPages={Math.ceil(filteredChallenges.length / challengesPerPage)}
         currentPage={currentPage}
         onPageChange={handlePageChange}
+        className="text-white"
       />
-    </div>
-  );
+    </div>
+  );
 }

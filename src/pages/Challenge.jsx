@@ -129,6 +129,6 @@ export default function ChallengesPage() {
         onPageChange={setCurrentPage}
         className="text-white"
       />
-    </div>
-   );
+    </div>
+  );
 }

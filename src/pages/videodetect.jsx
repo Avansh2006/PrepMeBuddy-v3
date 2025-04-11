@@ -178,30 +178,30 @@ const HRChatbot = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen w-full bg-gradient-to-r from-blue-50 to-indigo-50 p-6">
+    <div className="flex flex-col lg:flex-row min-h-screen w-full bg-gray-900 text-white p-6">
       <div className="lg:w-1/2 p-6 flex flex-col items-center">
-        <div className="bg-white rounded-xl shadow-lg p-6 w-full mb-6">
-          <h2 className="text-2xl font-bold text-center text-indigo-800 mb-4">Interview Monitor</h2>
+        <div className="bg-gray-800 rounded-xl shadow-lg p-6 w-full mb-6">
+          <h2 className="text-2xl font-bold text-center text-teal-400 mb-4">Interview Monitor</h2>
           
           {/* Timer and Status Panel */}
           <div className="flex justify-around mb-6">
             <div className="text-center">
-              <div className="text-4xl font-bold text-indigo-600">{formatTime(timeLeft)}</div>
-              <div className="text-sm text-gray-500">Time Remaining</div>
+              <div className="text-4xl font-bold text-teal-400">{formatTime(timeLeft)}</div>
+              <div className="text-sm text-gray-400">Time Remaining</div>
             </div>
             
             <div className="flex flex-col items-center">
-              <div className="text-center bg-gray-100 rounded-full h-16 w-16 flex items-center justify-center">
-                <span className="text-2xl font-bold text-gray-800">{facesDetected}</span>
+              <div className="text-center bg-gray-700 rounded-full h-16 w-16 flex items-center justify-center">
+                <span className="text-2xl font-bold text-white">{facesDetected}</span>
               </div>
-              <div className="text-sm text-gray-500 mt-1">Faces Detected</div>
+              <div className="text-sm text-gray-400 mt-1">Faces Detected</div>
             </div>
             
             <div className="text-center">
-              <div className={`text-xl font-bold ${deceptionAttempts > 0 ? 'text-red-500' : 'text-green-600'}`}>
+              <div className={`text-xl font-bold ${deceptionAttempts > 0 ? 'text-red-400' : 'text-teal-400'}`}>
                 {deceptionAttempts}
               </div>
-              <div className="text-sm text-gray-500">Deception Attempts</div>
+              <div className="text-sm text-gray-400">Deception Attempts</div>
             </div>
           </div>
         </div>
@@ -209,7 +209,7 @@ const HRChatbot = () => {
         {/* Webcam Container */}
         <div className="relative w-full max-w-[500px]">
           <div className={`rounded-xl overflow-hidden shadow-xl border-4 ${
-            isUserInFrame ? 'border-green-500' : 'border-red-500'
+            isUserInFrame ? 'border-teal-400' : 'border-red-400'
           }`}>
             <Webcam
               ref={webcamRef}
@@ -221,16 +221,16 @@ const HRChatbot = () => {
             
             {/* Webcam Status Overlay */}
             <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-white text-sm font-medium ${
-              isUserInFrame ? 'bg-green-500' : 'bg-red-500'
+              isUserInFrame ? 'bg-teal-400' : 'bg-red-400'
             }`}>
               {isUserInFrame ? 'User Detected' : 'No User'}
             </div>
           </div>
           
-          <div className="mt-4 bg-white rounded-lg shadow-md p-4">
+          <div className="mt-4 bg-gray-800 rounded-lg shadow-md p-4">
             <div className="flex flex-col space-y-2">
               {!isUserInFrame && (
-                <div className="flex items-center text-red-600">
+                <div className="flex items-center text-red-400">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                   </svg>
@@ -238,7 +238,7 @@ const HRChatbot = () => {
                 </div>
               )}
               {multipleFacesDetected && (
-                <div className="flex items-center text-red-600">
+                <div className="flex items-center text-red-400">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                   </svg>
@@ -246,7 +246,7 @@ const HRChatbot = () => {
                 </div>
               )}
               {isUserInFrame && !multipleFacesDetected && (
-                <div className="flex items-center text-green-600">
+                <div className="flex items-center text-teal-400">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
@@ -254,7 +254,7 @@ const HRChatbot = () => {
                 </div>
               )}
               {isCheating && cheatingCheckEnabled && (
-                <div className="flex items-center text-red-600">
+                <div className="flex items-center text-red-400">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                   </svg>
@@ -265,20 +265,11 @@ const HRChatbot = () => {
           </div>
         </div>
       </div>
-      <div className='mb-10 w-full h-[85vh]'>
-
-            <ChatBot />
+      <div className="mb-10 w-full h-[85vh]">
+        <ChatBot />
       </div>
-      
-      {/* Chatbot Container */}
-      {/* <div className="lg:w-1/2 p-6 mt-6 lg:mt-0">
-        <div className="bg-white rounded-xl shadow-lg h-full overflow-hidden">
-          <div className="p-4 h-[calc(100%-4rem)]">
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };
 
-export default HRChatbot;
+export default HRChatbot;
