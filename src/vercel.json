@@ -1,6 +1,7 @@
 {
   "build": {
-    "installCommand": "npm install --force"
+    "installCommand": "npm install --force",
+    "outputDirectory": "dist"
   },
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
