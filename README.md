@@ -1,5 +1,4 @@
 # PrepMeBuddy-v3
-[![Ask DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/Avansh2006/PrepMeBuddy-v3)
 
 PrepMeBuddy-v3 is a comprehensive web application designed to assist users in preparing for technical interviews. It offers a suite of tools including AI-powered roadmap generation, a DSA practice playground, mock interviews with an AI HR recruiter and proctoring, coding challenges, and progress tracking features.
 
